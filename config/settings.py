@@ -54,8 +54,8 @@ SITE_ID = 1  # This is required for allauth
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
         "APP": {
-            "client_id": "377185373122-sthnvl662onhmggfte4f8smd9emlvj7m.apps.googleusercontent.com",
-            "secret": "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",
+            "client_id": "User id",
+            "secret": "User secret",
             "key": "123",
         },
         "SCOPE": [
