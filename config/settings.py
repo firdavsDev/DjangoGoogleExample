@@ -1,7 +1,11 @@
+import os
+import warnings
 from pathlib import Path
 
+warnings.filterwarnings("ignore", message="Scope has changed from")
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
 
 # Quick-start development settings - unsuitable for production
@@ -31,6 +35,7 @@ INSTALLED_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google",
+    "django_extensions",
     # Add the following apps:
     "google_custom_aut",
 ]
@@ -48,7 +53,12 @@ MIDDLEWARE = [
 ]
 
 SITE_ID = 1  # This is required for allauth
-
+scope = [
+    "https://www.googleapis.com/auth/drive.file",
+    "https://www.googleapis.com/auth/userinfo.email",
+    "https://www.googleapis.com/auth/userinfo.profile",
+    "openid",
+]
 
 # Provider specific settings
 SOCIALACCOUNT_PROVIDERS = {
@@ -61,9 +71,10 @@ SOCIALACCOUNT_PROVIDERS = {
         "SCOPE": [
             "profile",
             "email",
+            "https://www.googleapis.com/auth/drive.file",
         ],
         "AUTH_PARAMS": {
-            "access_type": "online",
+            "access_type": "offline",
         },
     }
 }
@@ -134,7 +145,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
-
+MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = "/media/"
+client_secrets_file = os.path.join(BASE_DIR, "client_secrets.json")
+REDIRECT_URI = "https://8fe8-84-54-76-76.ngrok-free.app/accounts/google/login/callback/"
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
